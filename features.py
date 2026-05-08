@@ -32,3 +32,4 @@ df = df.with_columns(
 )
 
 print(df)
+df.write_csv("invoices_featured.csv")
