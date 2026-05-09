@@ -28,3 +28,8 @@ def predict(invoice: InvoiceFeatures):
         nudge = "low risk: no action needed"
 
     return {"predicted_days_to_pay": float(prediction), "nudge": nudge}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
