@@ -1,11 +1,11 @@
 # Solvent: Cash Flow Decision Engine (ML-powered)
 
-Solvent predicts invoice payment risk and returns a prescriptive action plan — not just a score. Built with 2026-standard Python tooling.
+Solvent predicts invoice payment risk and returns a prescriptive action plan - not just a score. Built with 2026-standard Python tooling.
 
 ## How it works
 
 1. **Data**: 1,000 synthetic invoices generated with realistic client payment behavior
-2. **Features**: Engineered with Polars — `historical_client_delay`, `relative_amount`, `is_weekend`, `days_until_due`, `avg_client_amount`
+2. **Features**: Engineered with Polars - `historical_client_delay`, `relative_amount`, `is_weekend`, `days_until_due`, `avg_client_amount`
 3. **Model**: XGBoost Survival Model (`survival:aft`) predicting days-to-payment over a 60-day horizon. MAE: 11.45 days
 4. **API**: FastAPI endpoint returning a specific nudge action based on predicted risk
 
@@ -52,7 +52,7 @@ uv run uvicorn main:app --reload
 ```
 
 ## Tech stack
-- **Polars** — fast feature engineering
-- **XGBoost** — survival:aft model
-- **FastAPI** — inference API
-- **uv** — package management
+- **Polars** - fast feature engineering
+- **XGBoost** - survival:aft model
+- **FastAPI** - inference API
+- **uv** - package management
