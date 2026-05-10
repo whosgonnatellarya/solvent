@@ -34,3 +34,8 @@ print(f"Mean Absolute Error: {mae:.2f} days")
 
 model.save_model("model.json")
 print("model saved!")
+
+feature_names = ["historical_client_delay", "relative_amount", "is_weekend", "days_until_due", "avg_client_amount"]
+importance = model.get_score(importance_type="gain")
+named_importance = {feature_names[int(k[1:])]: v for k, v in importance.items()}
+print("Feature importances:", named_importance)
