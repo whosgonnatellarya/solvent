@@ -27,7 +27,7 @@ POST /predict
 ```json
 {
   "predicted_days_to_pay": 34.97,
-  "nudge": "Medium risk: send a polite email in 3 days"
+  "nudge": "medium risk: send a polite email in 3 days"
 }
 ```
 
