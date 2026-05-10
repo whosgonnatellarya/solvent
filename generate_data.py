@@ -31,4 +31,4 @@ for i in range(1000):
     invoices.append(generate_invoices(i, random.choice(clients)))
 
 df = pl.DataFrame(invoices)
-print(df)
+
