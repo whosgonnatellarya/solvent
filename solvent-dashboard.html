@@ -31,12 +31,11 @@
     overflow-x: hidden;
   }
 
-  /* Animated grid background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: 
+    background-image:
       linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
     background-size: 40px 40px;
@@ -68,7 +67,6 @@
     z-index: 1;
   }
 
-  /* Header */
   header {
     display: flex;
     align-items: center;
@@ -110,7 +108,40 @@
     50% { opacity: 0.5; transform: scale(0.8); }
   }
 
-  /* Main layout */
+  /* Tab navigation */
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    text-shadow: var(--glow);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Grid / card layout */
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -199,7 +230,7 @@
 
   .field input::placeholder { color: var(--muted); }
 
-  /* Submit button */
+  /* Buttons */
   .btn {
     width: 100%;
     margin-top: 1.2rem;
@@ -240,7 +271,7 @@
 
   .btn:disabled::before { display: none; }
 
-  /* Result display */
+  /* Single invoice result */
   #result { display: none; }
 
   .risk-badge {
@@ -270,7 +301,6 @@
 
   .days-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
 
-  /* Probability bar */
   .prob-bar-container { margin: 1.2rem 0; }
   .prob-bar-label {
     display: flex;
@@ -294,7 +324,6 @@
     width: 0%;
   }
 
-  /* Nudge text */
   .nudge-text {
     font-size: 0.8rem;
     line-height: 1.6;
@@ -306,7 +335,6 @@
     margin-top: 1rem;
   }
 
-  /* Chart area */
   .chart-area {
     height: 120px;
     position: relative;
@@ -315,7 +343,6 @@
 
   canvas { width: 100% !important; }
 
-  /* Loading state */
   .loading {
     display: none;
     align-items: center;
@@ -339,7 +366,6 @@
     40% { opacity: 1; }
   }
 
-  /* Terminal log */
   .log {
     font-size: 0.7rem;
     color: var(--muted);
@@ -356,7 +382,6 @@
   .log-line .ok { color: var(--accent2); }
   .log-line .err { color: var(--danger); }
 
-  /* Metric tiles */
   .metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -381,7 +406,6 @@
 
   .metric-lbl { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
 
-  /* Animate in */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
@@ -396,7 +420,167 @@
     display: none;
   }
 
-  /* scrollbar */
+  /* CSV upload area */
+  .csv-drop {
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .csv-drop:hover, .csv-drop.drag-over {
+    border-color: var(--accent);
+    background: rgba(0,212,255,0.03);
+  }
+
+  .csv-drop input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .csv-drop-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: var(--muted);
+  }
+
+  .csv-drop-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .csv-drop-label strong { color: var(--accent); }
+
+  .csv-schema {
+    margin-top: 1rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.8rem 1rem;
+    line-height: 1.8;
+  }
+
+  .csv-schema span { color: var(--accent2); }
+
+  /* Batch summary strip */
+  .batch-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .batch-stat {
+    padding: 0.8rem;
+    background: rgba(0,212,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    text-align: center;
+  }
+
+  .batch-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  .batch-stat-lbl {
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* Risk table */
+  .risk-table-wrap {
+    overflow-x: auto;
+  }
+
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+  }
+
+  .risk-table th {
+    text-align: left;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .risk-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid rgba(15,31,48,0.6);
+    vertical-align: middle;
+  }
+
+  .risk-table tr.row-high {
+    background: rgba(255,60,95,0.07);
+    border-left: 2px solid rgba(255,60,95,0.5);
+  }
+
+  .risk-table tr.row-medium {
+    background: rgba(255,184,0,0.07);
+    border-left: 2px solid rgba(255,184,0,0.5);
+  }
+
+  .risk-table tr.row-low {
+    background: rgba(0,255,157,0.04);
+    border-left: 2px solid rgba(0,255,157,0.3);
+  }
+
+  .risk-table .rank-num {
+    color: var(--muted);
+    font-size: 0.65rem;
+    width: 2rem;
+    text-align: center;
+  }
+
+  .risk-table .days-cell {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .row-high .days-cell { color: var(--danger); }
+  .row-medium .days-cell { color: var(--warn); }
+  .row-low .days-cell { color: var(--accent2); }
+
+  .inline-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .badge-high { background: rgba(255,60,95,0.15); color: var(--danger); }
+  .badge-medium { background: rgba(255,184,0,0.15); color: var(--warn); }
+  .badge-low { background: rgba(0,255,157,0.12); color: var(--accent2); }
+
+  .nudge-cell {
+    color: var(--muted);
+    font-size: 0.7rem;
+    max-width: 260px;
+  }
+
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
@@ -414,7 +598,6 @@
     </div>
   </header>
 
-  <!-- Model stats -->
   <div class="metrics animate-in">
     <div class="metric">
       <div class="metric-val">11.45</div>
@@ -430,89 +613,153 @@
     </div>
   </div>
 
-  <div class="grid">
-    <!-- Input form -->
-    <div class="card animate-in">
-      <div class="card-label">Invoice Parameters</div>
-      <div class="input-grid">
-        <div class="field">
-          <label>Hist. Client Delay (days)</label>
-          <input type="number" id="historical_client_delay" placeholder="e.g. 45" step="0.1">
+  <!-- Tab navigation -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('single')">//&nbsp;SINGLE INVOICE</button>
+    <button class="tab-btn" onclick="switchTab('batch')">//&nbsp;BATCH CSV UPLOAD</button>
+  </div>
+
+  <!-- ── Tab 1: Single invoice ── -->
+  <div id="tab-single" class="tab-panel active">
+    <div class="grid">
+      <div class="card animate-in">
+        <div class="card-label">Invoice Parameters</div>
+        <div class="input-grid">
+          <div class="field">
+            <label>Hist. Client Delay (days)</label>
+            <input type="number" id="historical_client_delay" placeholder="e.g. 45" step="0.1">
+          </div>
+          <div class="field">
+            <label>Relative Amount</label>
+            <input type="number" id="relative_amount" placeholder="e.g. 1.5" step="0.01">
+          </div>
+          <div class="field">
+            <label>Is Weekend (0/1)</label>
+            <input type="number" id="is_weekend" placeholder="0 or 1" min="0" max="1">
+          </div>
+          <div class="field">
+            <label>Days Until Due</label>
+            <input type="number" id="days_until_due" placeholder="e.g. 30" step="0.1">
+          </div>
+          <div class="field" style="grid-column: 1/-1">
+            <label>Avg Client Amount ($)</label>
+            <input type="number" id="avg_client_amount" placeholder="e.g. 25000" step="100">
+          </div>
         </div>
-        <div class="field">
-          <label>Relative Amount</label>
-          <input type="number" id="relative_amount" placeholder="e.g. 1.5" step="0.01">
+        <button class="btn" id="submitBtn" onclick="predict()">
+          ▶ RUN PREDICTION
+        </button>
+        <div class="loading" id="loading">
+          <span>Computing risk vector</span>
+          <span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
         </div>
-        <div class="field">
-          <label>Is Weekend (0/1)</label>
-          <input type="number" id="is_weekend" placeholder="0 or 1" min="0" max="1">
+        <div class="error-msg" id="errorMsg">⚠ Could not reach API. Is the server running?</div>
+      </div>
+
+      <div class="card animate-in" id="result">
+        <div class="card-label">Risk Assessment</div>
+        <div id="riskBadge" class="risk-badge"></div>
+        <div class="days-display" id="daysVal">--</div>
+        <div class="days-label">PREDICTED DAYS TO PAYMENT</div>
+
+        <div class="prob-bar-container">
+          <div class="prob-bar-label">
+            <span>Payment probability over 60 days</span>
+            <span id="probPct">--%</span>
+          </div>
+          <div class="prob-bar-track">
+            <div class="prob-bar-fill" id="probBar"></div>
+          </div>
         </div>
-        <div class="field">
-          <label>Days Until Due</label>
-          <input type="number" id="days_until_due" placeholder="e.g. 30" step="0.1">
-        </div>
-        <div class="field" style="grid-column: 1/-1">
-          <label>Avg Client Amount ($)</label>
-          <input type="number" id="avg_client_amount" placeholder="e.g. 25000" step="100">
+
+        <div class="nudge-text" id="nudgeText"></div>
+      </div>
+
+      <div class="card card-full animate-in">
+        <div class="card-label">Feature Importance — Gain Score</div>
+        <div class="chart-area">
+          <canvas id="importanceChart"></canvas>
         </div>
       </div>
-      <button class="btn" id="submitBtn" onclick="predict()">
-        ▶ RUN PREDICTION
-      </button>
-      <div class="loading" id="loading">
-        <span>Computing risk vector</span>
-        <span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
+
+      <div class="card card-full animate-in">
+        <div class="card-label">System Log</div>
+        <div class="log" id="log">
+          <div class="log-line"><span class="ts">00:00:00</span><span class="ok">MODEL LOADED</span> — XGBoost survival:aft initialized</div>
+          <div class="log-line"><span class="ts">00:00:00</span><span class="ok">API READY</span> — FastAPI endpoint listening on :8000</div>
+        </div>
       </div>
-      <div class="error-msg" id="errorMsg">⚠ Could not reach API. Is the server running?</div>
     </div>
+  </div>
 
-    <!-- Result -->
-    <div class="card animate-in" id="result">
-      <div class="card-label">Risk Assessment</div>
-      <div id="riskBadge" class="risk-badge"></div>
-      <div class="days-display" id="daysVal">--</div>
-      <div class="days-label">PREDICTED DAYS TO PAYMENT</div>
+  <!-- ── Tab 2: Batch CSV upload ── -->
+  <div id="tab-batch" class="tab-panel">
+    <div class="grid">
+      <div class="card card-full animate-in">
+        <div class="card-label">CSV Upload</div>
 
-      <div class="prob-bar-container">
-        <div class="prob-bar-label">
-          <span>Payment probability over 60 days</span>
-          <span id="probPct">--%</span>
+        <div class="csv-drop" id="csvDrop">
+          <input type="file" id="csvFile" accept=".csv" onchange="handleFile(this.files[0])">
+          <div class="csv-drop-icon">⬆</div>
+          <div class="csv-drop-label">
+            <strong>Click to upload</strong> or drag &amp; drop a CSV file
+          </div>
         </div>
-        <div class="prob-bar-track">
-          <div class="prob-bar-fill" id="probBar"></div>
+
+        <div class="csv-schema">
+          Required columns (in any order):&nbsp;
+          <span>historical_client_delay</span> &nbsp;·&nbsp;
+          <span>relative_amount</span> &nbsp;·&nbsp;
+          <span>is_weekend</span> &nbsp;·&nbsp;
+          <span>days_until_due</span> &nbsp;·&nbsp;
+          <span>avg_client_amount</span>
+        </div>
+
+        <div class="error-msg" id="batchErrorMsg" style="margin-top:0.8rem">⚠ Error processing batch.</div>
+        <div class="loading" id="batchLoading" style="margin-top:0.8rem">
+          <span>Running batch inference</span>
+          <span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
         </div>
       </div>
 
-      <div class="nudge-text" id="nudgeText"></div>
-    </div>
+      <!-- Batch results (hidden until data loads) -->
+      <div class="card card-full animate-in" id="batchResults" style="display:none">
+        <div class="card-label">Risk Rankings — Sorted by Predicted Days (Highest Risk First)</div>
 
-    <!-- Feature importance chart -->
-    <div class="card card-full animate-in">
-      <div class="card-label">Feature Importance — Gain Score</div>
-      <div class="chart-area">
-        <canvas id="importanceChart"></canvas>
-      </div>
-    </div>
+        <div class="batch-summary" id="batchSummary"></div>
 
-    <!-- Terminal log -->
-    <div class="card card-full animate-in">
-      <div class="card-label">System Log</div>
-      <div class="log" id="log">
-        <div class="log-line"><span class="ts">00:00:00</span><span class="ok">MODEL LOADED</span> — XGBoost survival:aft initialized</div>
-        <div class="log-line"><span class="ts">00:00:00</span><span class="ok">API READY</span> — FastAPI endpoint listening on :8000</div>
+        <div class="risk-table-wrap">
+          <table class="risk-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Risk</th>
+                <th>Days to Pay</th>
+                <th>Hist. Delay</th>
+                <th>Rel. Amount</th>
+                <th>Weekend</th>
+                <th>Days Until Due</th>
+                <th>Avg Amount</th>
+                <th>Recommended Action</th>
+              </tr>
+            </thead>
+            <tbody id="batchTableBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  // Feature importance data from your actual model
+  const API = 'https://solvent-8yfo.onrender.com';
+
+  // Feature importance
   const importanceData = {
     labels: ['days_until_due', 'historical_delay', 'relative_amount', 'avg_client_amt', 'is_weekend'],
     values: [4.821, 0.264, 0.242, 0.216, 0.167]
   };
 
-  // Draw feature importance bars
   function drawImportanceChart() {
     const canvas = document.getElementById('importanceChart');
     const ctx = canvas.getContext('2d');
@@ -537,23 +784,19 @@
       const val = importanceData.values[i];
       const barW = ((w - labelW - padding - 60) * val) / max;
 
-      // Label
       ctx.font = '11px JetBrains Mono';
       ctx.fillStyle = '#4a6070';
       ctx.fillText(label, 0, y + barH - 3);
 
-      // Track
       ctx.fillStyle = '#0f1f30';
       ctx.fillRect(labelW, y, w - labelW - padding - 60, barH);
 
-      // Fill
       const grad = ctx.createLinearGradient(labelW, 0, labelW + barW, 0);
       grad.addColorStop(0, '#00d4ff');
       grad.addColorStop(1, '#00ff9d');
       ctx.fillStyle = grad;
       ctx.fillRect(labelW, y, barW, barH);
 
-      // Value
       ctx.fillStyle = '#c8d8e8';
       ctx.font = '10px JetBrains Mono';
       ctx.fillText(val.toFixed(3), labelW + barW + 6, y + barH - 3);
@@ -571,6 +814,16 @@
     log.scrollTop = log.scrollHeight;
   }
 
+  // ── Tab switching ──
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`tab-${name}`).classList.add('active');
+    event.currentTarget.classList.add('active');
+    if (name === 'single') drawImportanceChart();
+  }
+
+  // ── Single invoice predict ──
   async function predict() {
     const fields = ['historical_client_delay', 'relative_amount', 'is_weekend', 'days_until_due', 'avg_client_amount'];
     const payload = {};
@@ -579,7 +832,7 @@
       const val = parseFloat(document.getElementById(f).value);
       if (isNaN(val)) {
         document.getElementById('errorMsg').style.display = 'block';
-        document.getElementById('errorMsg').textContent = `⚠ Please fill in all fields.`;
+        document.getElementById('errorMsg').textContent = '⚠ Please fill in all fields.';
         return;
       }
       payload[f] = val;
@@ -591,7 +844,7 @@
     addLog(`INFERENCE REQUEST — payload: ${JSON.stringify(payload).substring(0, 60)}...`);
 
     try {
-      const res = await fetch(https://solvent-8yfo.onrender.com, {
+      const res = await fetch(`${API}/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -604,7 +857,7 @@
       displayResult(data);
     } catch (e) {
       document.getElementById('errorMsg').style.display = 'block';
-      document.getElementById('errorMsg').textContent = '⚠ Could not reach API. Is uvicorn running on :8000?';
+      document.getElementById('errorMsg').textContent = '⚠ Could not reach API. Is uvicorn running?';
       addLog(`ERROR — ${e.message}`, 'err');
     } finally {
       document.getElementById('submitBtn').disabled = false;
@@ -620,36 +873,148 @@
     resultEl.style.display = 'block';
     resultEl.classList.add('animate-in');
 
-    // Days
     document.getElementById('daysVal').textContent = days.toFixed(1);
 
-    // Risk badge
-    const badge = document.getElementById('riskBadge');
     const isHigh = days > 60;
     const isMed = days > 30 && days <= 60;
+    const badge = document.getElementById('riskBadge');
     badge.className = `risk-badge ${isHigh ? 'risk-high' : isMed ? 'risk-medium' : 'risk-low'}`;
     badge.textContent = isHigh ? '● HIGH RISK' : isMed ? '● MEDIUM RISK' : '● LOW RISK';
 
-    // Probability bar
     const prob = Math.max(0, Math.min(100, 100 - (days / 90) * 100));
     const bar = document.getElementById('probBar');
     bar.style.background = isHigh ? '#ff3c5f' : isMed ? '#ffb800' : '#00ff9d';
     document.getElementById('probPct').textContent = `${prob.toFixed(0)}%`;
     setTimeout(() => { bar.style.width = `${prob}%`; }, 100);
 
-    // Nudge
     document.getElementById('nudgeText').textContent = `→ ${nudge}`;
 
-    // Days color
     const daysEl = document.getElementById('daysVal');
     daysEl.style.color = isHigh ? 'var(--danger)' : isMed ? 'var(--warn)' : 'var(--accent2)';
     daysEl.style.textShadow = isHigh ? 'var(--glow-red)' : isMed ? '0 0 20px rgba(255,184,0,0.4)' : 'var(--glow-green)';
   }
 
-  window.addEventListener('load', () => {
-    drawImportanceChart();
+  // ── CSV batch upload ──
+  const REQUIRED_COLS = ['historical_client_delay', 'relative_amount', 'is_weekend', 'days_until_due', 'avg_client_amount'];
+
+  function parseCSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    if (lines.length < 2) throw new Error('CSV must have a header row and at least one data row.');
+
+    const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+    const missing = REQUIRED_COLS.filter(c => !headers.includes(c));
+    if (missing.length) throw new Error(`Missing columns: ${missing.join(', ')}`);
+
+    return lines.slice(1).map((line, idx) => {
+      const vals = line.split(',').map(v => v.trim());
+      const row = {};
+      headers.forEach((h, i) => { row[h] = parseFloat(vals[i]); });
+      const bad = REQUIRED_COLS.find(c => isNaN(row[c]));
+      if (bad) throw new Error(`Row ${idx + 2}: invalid value for "${bad}"`);
+      return row;
+    });
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      document.getElementById('batchErrorMsg').style.display = 'none';
+      document.getElementById('batchResults').style.display = 'none';
+
+      let invoices;
+      try {
+        invoices = parseCSV(e.target.result);
+      } catch (err) {
+        document.getElementById('batchErrorMsg').style.display = 'block';
+        document.getElementById('batchErrorMsg').textContent = `⚠ Parse error: ${err.message}`;
+        return;
+      }
+
+      document.getElementById('batchLoading').classList.add('active');
+
+      try {
+        const res = await fetch(`${API}/predict_batch`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ invoices })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        renderBatchResults(data.predictions);
+      } catch (err) {
+        document.getElementById('batchErrorMsg').style.display = 'block';
+        document.getElementById('batchErrorMsg').textContent = `⚠ API error: ${err.message}`;
+      } finally {
+        document.getElementById('batchLoading').classList.remove('active');
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function renderBatchResults(predictions) {
+    const high = predictions.filter(p => p.predicted_days_to_pay > 60).length;
+    const med  = predictions.filter(p => p.predicted_days_to_pay > 30 && p.predicted_days_to_pay <= 60).length;
+    const low  = predictions.filter(p => p.predicted_days_to_pay <= 30).length;
+    const avg  = predictions.reduce((s, p) => s + p.predicted_days_to_pay, 0) / predictions.length;
+
+    document.getElementById('batchSummary').innerHTML = `
+      <div class="batch-stat">
+        <div class="batch-stat-val" style="color:var(--text)">${predictions.length}</div>
+        <div class="batch-stat-lbl">Total Invoices</div>
+      </div>
+      <div class="batch-stat">
+        <div class="batch-stat-val" style="color:var(--danger)">${high}</div>
+        <div class="batch-stat-lbl">High Risk</div>
+      </div>
+      <div class="batch-stat">
+        <div class="batch-stat-val" style="color:var(--warn)">${med}</div>
+        <div class="batch-stat-lbl">Medium Risk</div>
+      </div>
+      <div class="batch-stat">
+        <div class="batch-stat-val" style="color:var(--accent2)">${low}</div>
+        <div class="batch-stat-lbl">Low Risk</div>
+      </div>
+    `;
+
+    const tbody = document.getElementById('batchTableBody');
+    tbody.innerHTML = predictions.map((p, i) => {
+      const days = p.predicted_days_to_pay;
+      const inv = p.invoice;
+      const isHigh = days > 60;
+      const isMed = days > 30;
+      const rowClass = isHigh ? 'row-high' : isMed ? 'row-medium' : 'row-low';
+      const badgeClass = isHigh ? 'badge-high' : isMed ? 'badge-medium' : 'badge-low';
+      const riskLabel = isHigh ? 'HIGH' : isMed ? 'MEDIUM' : 'LOW';
+
+      return `<tr class="${rowClass}">
+        <td class="rank-num">${i + 1}</td>
+        <td><span class="inline-badge ${badgeClass}">${riskLabel}</span></td>
+        <td class="days-cell">${days.toFixed(1)}</td>
+        <td>${inv.historical_client_delay.toFixed(1)}</td>
+        <td>${inv.relative_amount.toFixed(2)}</td>
+        <td>${inv.is_weekend ? 'Yes' : 'No'}</td>
+        <td>${inv.days_until_due.toFixed(1)}</td>
+        <td>$${inv.avg_client_amount.toLocaleString()}</td>
+        <td class="nudge-cell">${p.nudge}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('batchResults').style.display = 'block';
+  }
+
+  // Drag-and-drop highlight
+  const csvDrop = document.getElementById('csvDrop');
+  csvDrop.addEventListener('dragover', e => { e.preventDefault(); csvDrop.classList.add('drag-over'); });
+  csvDrop.addEventListener('dragleave', () => csvDrop.classList.remove('drag-over'));
+  csvDrop.addEventListener('drop', e => {
+    e.preventDefault();
+    csvDrop.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
   });
 
+  window.addEventListener('load', drawImportanceChart);
   window.addEventListener('resize', drawImportanceChart);
 </script>
 </body>
