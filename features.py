@@ -4,7 +4,7 @@ from generate_data import df
 df = df.with_columns(
     (pl.col("paid_date") - pl.col("issue_date")).dt.total_days().alias("days_to_pay")
 )
-
+# this is js to check the working
 client_delays = df.group_by("client_name").agg(
     pl.col("days_to_pay").mean().alias("historical_client_delay")
 )
